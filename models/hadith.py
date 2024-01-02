@@ -1,9 +1,34 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, List
+
+
+class HadithNarrator(BaseModel):
+	class Config:
+		pupulate_by_name = True
+
+	id: str = Field(..., alias="_id")
+	"""_id is a string of the narrator_id used in database retrieval and routing"""
+
+	narrator_id: int
+	grade: Optional[str]
+	"""The grade of the narrator in terms of generations. E.x: Companion, Tabi'"""
+
+	name_en: Optional[str]
+	"""The name of the narrator in English"""
+
+	name_ar: Optional[str]
+	"""The name of the narrator in Arabic"""
+
+	death_reason: Optional[str]
+	"""The reason of death of the narrator"""
+
+	places_of_stay: Optional[List[str]] = None
+	"""The places where the narrator stayed"""
+
 
 class Hadith(BaseModel):
 	class Config:
-		allow_population_by_field_name = True
+		populate_by_name = True
 
 	id: str = Field(..., alias="_id")
 	"""_id is a string of the hadith_no used in database retrieval and routing"""	
@@ -34,27 +59,3 @@ class Hadith(BaseModel):
 	The chain of narrators Sof the hadith, with the top most narrator after
 	after Rasool Allah (SAW) being the first in the lisT
 	"""
-
-
-class HadithNarrator(BaseModel):
-	class Config:
-		allow_population_by_field_name = True
-
-	id: str = Field(..., alias="_id")
-	"""_id is a string of the narrator_id used in database retrieval and routing"""
-
-	narrator_id: int
-	grade: Optional[str]
-	"""The grade of the narrator in terms of generations. E.x: Companion, Tabi'"""
-
-	name_en: Optional[str]
-	"""The name of the narrator in English"""
-	
-	name_ar: Optional[str]
-	"""The name of the narrator in Arabic"""
-
-	death_reason: Optional[str]
-	"""The reason of death of the narrator"""
-
-	places_of_stay: Optional[List[str]] = None
-	"""The places where the narrator stayed"""
