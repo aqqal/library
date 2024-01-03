@@ -13,7 +13,7 @@ load_dotenv()
 
 app = FastAPI(
     title="Aqqal Library of Works Service",
-    description="API service for Aqqal chatbot, Aqqalbot",
+    description="Includes hadiths, Narrators, and hadith semantic search",
     version="0.1.0",
 )
 
