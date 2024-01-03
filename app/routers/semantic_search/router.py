@@ -11,7 +11,7 @@ router = APIRouter(
 	dependencies=[Depends(validate_token)]
 )
 
-@router.api_route('/{path:path}', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@router.api_route('/{path:path}', methods=['POST'])
 async def forward(request: Request, path: str):
 	method = request.method
 	body = await request.body()
