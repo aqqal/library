@@ -107,6 +107,7 @@ def search_narrators(search_obj: NarratorSearch, limit=10, skip=0) -> List[Narra
 	Result strings are case insensitive using Atlas standard analyzer
 	"""
 	search_dict = search_obj.dict()
+	
 	has_query = False
 	for key in search_dict:
 		if search_dict[key]:
@@ -115,6 +116,7 @@ def search_narrators(search_obj: NarratorSearch, limit=10, skip=0) -> List[Narra
 	pipeline = [
 		{ "$limit": limit }
 	]
+
 	if skip > 0:
 		pipeline.append({"$skip": skip})
 
@@ -123,11 +125,26 @@ def search_narrators(search_obj: NarratorSearch, limit=10, skip=0) -> List[Narra
 			{
 				"$search": {
 					"compound": {
-					"should": get_should_clauses(search_dict)
+					"should": [
+							{
+								"text": {
+									"fuzzy" : {},
+									"query": search_dict.get("name_en", ""),
+									"path": "name_en"
+								}
+							},
+							{
+								"text": {
+									"query": "companion",
+									"path": "grade",
+									"score": { "boost": { "value": 2 } }
+								}
+							}
+						]
 					}
 				},
 			},
 		)
 
-	res = hadiths_collection.aggregate(pipeline)
+	res = narrators_collection.aggregate(pipeline)
 	return res
