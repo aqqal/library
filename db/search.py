@@ -2,7 +2,7 @@ from typing import List
 
 from db.config import hadith_db
 from db.models.hadith import Hadith
-from db.models.search import HadithSearch
+from db.models.search import HadithSearch, NarratorSearchs
 
 from app.logger import logger
 
@@ -99,3 +99,34 @@ def get_should_clauses(search_dict):
 		clauses.append(text_clause)
 
 	return clauses
+
+
+def search_narrators(search_obj: NarratorSearch, limit=10, skip=0) -> List[Narrator]:
+	"""
+	Result strings are case insensitive using Atlas standard analyzer
+	"""
+	search_dict = search_obj.dict()
+	has_query = False
+	for key in search_dict:
+		if search_dict[key]:
+			has_query = True
+
+	pipeline = [
+		{ "$limit": limit }
+	]
+	if skip > 0:
+		pipeline.append({"$skip": skip})
+
+	if has_query:
+		pipeline.insert(0,
+			{
+				"$search": {
+					"compound": {
+					"should": get_should_clauses(search_dict)
+					}
+				},
+			},
+		)
+
+	res = hadiths_collection.aggregate(pipeline)
+	return res
