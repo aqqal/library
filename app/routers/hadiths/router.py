@@ -26,6 +26,12 @@ async def get_hadith(id: str):
 	raise HTTPException(status_code=404, detail="Hadith not found")
 
 
+@router.get("/", response_model=List[Hadith])
+async def get_hadiths(limit: int = 10, skip: int = 0):
+	hadiths = hadiths_collection.find().skip(skip).limit(limit)
+	return jsonable_encoder(hadiths)
+
+
 @router.post("/search", response_model=List[Hadith])
 async def search_hadiths(query_body: HadithSearch, limit: int = 10, skip: int = 0):
 	res = search_hadith(query_body, limit, skip)
