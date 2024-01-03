@@ -1,12 +1,13 @@
 from typing import List
 
 from db.config import hadith_db
-from db.models.hadith import Hadith
-from db.models.search import HadithSearch, NarratorSearchs
+from db.models.hadith import Hadith, Narrator
+from db.models.search import HadithSearch, NarratorSearch
 
 from app.logger import logger
 
 hadiths_collection = hadith_db["hadiths"]
+narrators_collection = hadith_db["narrators"]
 
 def search_hadith(search_obj: HadithSearch, limit=10, skip=0) -> List[Hadith]:
 	"""
