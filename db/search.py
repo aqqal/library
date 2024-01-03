@@ -9,7 +9,7 @@ from app.logger import logger
 hadiths_collection = hadith_db["hadiths"]
 narrators_collection = hadith_db["narrators"]
 
-def hadiths_search(search_obj: HadithSearch, limit=10, skip=0) -> List[Hadith]:
+def hadiths_search(search_obj: HadithSearch, limit=10, skip=0, include_chains=False) -> List[Hadith]:
 	"""
 	Result strings are case insensitive using Atlas standard analyzer
 	"""
@@ -22,6 +22,15 @@ def hadiths_search(search_obj: HadithSearch, limit=10, skip=0) -> List[Hadith]:
 	pipeline = [
 		{ "$limit": limit }
 	]
+	
+
+	proj = {
+		"$project": {"chain": 0}
+	}
+
+	if not include_chains:
+		pipeline.insert(0, proj)
+
 	if skip > 0:
 		pipeline.append({"$skip": skip})
 

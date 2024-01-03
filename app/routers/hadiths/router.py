@@ -21,15 +21,16 @@ narrators_collection = hadith_db["narrators"]
 
 
 @router.get("/", response_model=List[Hadith])
-async def get_hadiths(limit: int = 10, skip: int = 0):
-	hadiths = hadiths_collection.find().skip(skip).limit(limit)
+async def get_hadiths(limit: int = 10, skip: int = 0, include_chains: bool = True):
+	proj = {"chain": 0} if not include_chains else {}
+
+	hadiths = hadiths_collection.find({}, proj).skip(skip).limit(limit)
 	return jsonable_encoder(hadiths)
 
 
 @router.post("/search", response_model=List[Hadith])
-async def search_hadiths(body: HadithSearch, limit: int = 10, skip: int = 0):
-	res = hadiths_search(body, limit, skip)
-	print(res)
+async def search_hadiths(body: HadithSearch, skip: int = 0, limit: int = 10, include_chains: bool = False):
+	res = hadiths_search(body, limit, skip, include_chains)
 	return res
 
 
@@ -55,8 +56,10 @@ async def get_narrator(id: str):
 
 
 @router.get("/{id}", response_model=Hadith)
-async def get_hadith(id: str):
-	hadith = hadiths_collection.find_one({"_id": id})
+async def get_hadith(id: str, include_chain: bool = True):
+	proj = {"chain": 0} if not include_chains else {}
+	
+	hadith = hadiths_collection.find_one({"_id": id}, proj)
 	if hadith:
 		return hadith
 	raise HTTPException(status_code=404, detail="Hadith not found")
