@@ -1,4 +1,4 @@
-from models.hadith import HadithNarrator, Hadith
+from db.models.hadith import HadithNarrator, Hadith
 from fastapi.encoders import jsonable_encoder
 from db.config import hadith_db
 
