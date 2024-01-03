@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 class HadithSearch(BaseModel):
 	"""
 	Search for hadiths
@@ -13,3 +14,11 @@ class HadithSearch(BaseModel):
 
 	top_narrator: Optional[str] = None
 	"""Query string of the name of the top most narrator in the sanad chain of the hadith"""
+
+
+class NarratorSearch(BaseModel):
+	"""
+	Search for narrators
+	"""
+	name_en: Optional[str] = None
+	"""Query string of the name of the narrator in English"""
