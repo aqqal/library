@@ -27,6 +27,6 @@ async def get_hadith(id: str):
 
 
 @router.post("/search", response_model=List[Hadith])
-async def search_hadiths(query_body: HadithSearch):
-	res = search_hadith(query_body)
+async def search_hadiths(query_body: HadithSearch, limit: int = 10, skip: int = 0):
+	res = search_hadith(query_body, limit, skip)
 	return res
