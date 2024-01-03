@@ -10,7 +10,7 @@ hadiths_collection = hadith_db["hadiths"]
 
 def search_hadith(search_obj: HadithSearch, limit=10, skip=0) -> List[Hadith]:
 	"""
-	Dynamically generates a list of should clauses 	
+	Result strings are case insensitive using Atlas standard analyzer
 	"""
 	search_dict = search_obj.dict()
 	has_query = False
@@ -41,7 +41,7 @@ def search_hadith(search_obj: HadithSearch, limit=10, skip=0) -> List[Hadith]:
 
 def get_should_clauses(search_dict):
 	"""
-	Result strings are case insensitive using Atlas standard analyzer
+	Dynamically generates a list of should clauses 	
 	"""
 	book_ranking_clauses: list = [
 		{
