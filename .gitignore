@@ -5,6 +5,8 @@
 /share
 *__pycache__
 
+Dockerfile
+
 *.cfg
 *.env
 db/*.json

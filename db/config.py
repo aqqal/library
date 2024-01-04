@@ -1,8 +1,5 @@
 import pymongo
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 MONGO_URL = os.getenv("MONGO_URL")
 HADITH_DB_NAME = "hadithDB"
