@@ -3,9 +3,7 @@ from app.auth import validate_token
 
 import httpx
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 router = APIRouter(
 	prefix="/semanticSearch",
 	dependencies=[Depends(validate_token)]
