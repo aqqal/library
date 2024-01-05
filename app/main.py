@@ -1,8 +1,8 @@
 from fastapi import FastAPI, APIRouter
-from app.logger import logger
+from logger import logger
 
-from app.routers.hadiths.router import router as hadiths_router
-from app.routers.semantic_search.router import router as semantic_search_router
+from routers.hadiths.router import router as hadiths_router
+from routers.semantic_search.router import router as semantic_search_router
 
 from config import log_config
 

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Depends, Response
-from app.auth import validate_token
+from auth import validate_token
 
 import httpx
 import os

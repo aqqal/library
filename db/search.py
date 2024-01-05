@@ -4,7 +4,7 @@ from db.config import hadith_db
 from db.models.hadith import Hadith, HadithNarrator
 from db.models.search import HadithSearch, NarratorSearch
 
-from app.logger import logger
+from logger import logger
 
 hadiths_collection = hadith_db["hadiths"]
 narrators_collection = hadith_db["narrators"]

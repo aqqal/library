@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
-from app.auth import validate_token
+from auth import validate_token
 
 from db.models.hadith import Hadith, HadithNarrator
 from db.models.search import HadithSearch, NarratorSearch
