@@ -5,6 +5,8 @@
 /share
 *__pycache__
 
+*.log
+
 *.cfg
 *.env
 db/*.json
