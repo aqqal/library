@@ -20,7 +20,7 @@ hadiths_collection = hadith_db["hadiths"]
 narrators_collection = hadith_db["narrators"]
 
 
-@router.get("/", response_model=List[Hadith])
+@router.get("", response_model=List[Hadith])
 async def get_hadiths(limit: int = 10, skip: int = 0, include_chains: bool = True):
 	proj = {"chain": 0}
 
